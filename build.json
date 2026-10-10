@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "0e0b5192084346e4084ff8ed9953750e9212120f",
-  "pathSha": "b14e986061b42b15454744c54ca7c2c4e2550531",
-  "subject": "Merge remote-tracking branch 'origin/Ys-bleeding-edge' into Ys-bleeding-edge",
-  "committedAt": "2026-10-10T00:52:47Z",
+  "sha": "ce009af74811114377ff4f06ed7ea5b0e3d38c35",
+  "pathSha": "240c7c39cc11416d399e3b4161781a4bf17e2775",
+  "subject": "feat(vessel-studio): one Vessel Studio everywhere - the repo pages ARE the artifact (D30)",
+  "committedAt": "2026-10-10T02:03:47Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
