@@ -355,6 +355,7 @@
         <div id="scenePanel"></div></details>
       <details class="card" id="grp-ai" open><summary>Sim lab <small>an AI flies; you tweak and watch</small></summary>
         <div id="racePanel"></div>
+        <label class="check" title="With Is AI off and no key, stick, trigger or touch for 3 s, the AI flies your hull to its next ring; any input hands it back (D31). Off: an idle hull keeps its heading."><input type="checkbox" id="idleTakeover"> <span><b>AI holds my idle hull</b> — after 3 s with no input it flies to the next ring; touch any control to take it back</span></label>
         <div hidden>
         <label class="check"><input type="checkbox" id="aiOn"> <span><b>AI flies the Stoat</b> — races, then starts again; change any setting and watch the next lap</span></label>
         <div class="rowsel">
@@ -499,7 +500,7 @@
     styleComet: 0.5, styleNeedle: 0.5, styleAnchor: 0.5, styleMaelstrom: 0.5, styleFlare: 0.5,
     styleStep: 0.15, styleDrift: 0.04, needleStep: 0.1, needleCone: 20,
     // the AI pilot (sim lab)
-    aiQ: 0.6, aiCone: 12, aiGiveUp: 3.5, aiMinRing: 200, aiTurn: 70, aiSling: 1, aiTau: 0.3, aiNoise: 0, aiWarp: 1, aiWarpQ: 1, aiNear: 60, aiLimeWait: 0.5,
+    aiQ: 0.6, aiCone: 12, aiGiveUp: 3.5, aiMinRing: 200, aiTurn: 70, aiSling: 1, aiTau: 0.3, aiNoise: 0, aiWarp: 1, aiWarpQ: 1, aiNear: 60, aiLimeWait: 0.5, aiMaxOrbit: 360, aiOrbitRest: 2,
     // birth & annihilation (the dipole pair)
     bornS: 0.9, whInS: 1.1, whInFrom: 700, dieS: 0.7, whOutSpeed: 450, whOutFade: 1.6, shellBend: 6,
     gwAmp: 12, gwSpeed: 120, gwPeriod: 0.35, gwRingdown: 1.0, gwPrism: 0.6, gwShake: 1, gwGlow: 1,
@@ -525,6 +526,8 @@
     ['ai', 'aiWarpQ', 'Field AI squeeze (measured best: 1)', 0.05, 1, 0.05],
     ['ai', 'aiNear', 'Field AI lets go this close to the ring (u)', 0, 300, 5],
     ['ai', 'aiLimeWait', 'Field AI lets go once the path has not warped for (s)', 0.1, 3, 0.05],
+    ['ai', 'aiMaxOrbit', 'Field AI lets go after circling its black hole this far (°, 360 = one lap, 0 = no cap; game: StoatDipoleConfigSO.autopilotMaxOrbitDegrees)', 0, 1080, 30],
+    ['ai', 'aiOrbitRest', '…and waits this long before the next pair (s; game: autopilotIntervalSeconds)', 0, 5, 0.1],
     ['style', 'styleComet', 'Comet · velocity', 0, 1, 0.01],
     ['style', 'styleNeedle', 'Needle · precision', 0, 1, 0.01],
     ['style', 'styleAnchor', 'Anchor · control', 0, 1, 0.01],
@@ -709,9 +712,10 @@
   const portal = Object.assign({ A: true, B: true }, saved.portal || {});
   let mode = 'fly';
   let invertY = !!saved.invertY;
+  let idleTakeover = saved.idleTakeover !== false;   // D31: on unless switched off
   let intensity = saved.intensity || 2, laps = saved.laps || 2, seed = saved.seed || 7, domainKey = saved.domain || 'jade', courseKind = saved.courseKind || 'circuit';
   let runs = saved.runs || [];
-  function persist() { lsSet(LS_KEY, { P: BP, liveStyles, style, slingMode, portal, invertY, intensity, laps, seed, domain: domainKey, courseKind, runs: runs.slice(-40),
+  function persist() { lsSet(LS_KEY, { P: BP, liveStyles, style, slingMode, portal, invertY, idleTakeover, intensity, laps, seed, domain: domainKey, courseKind, runs: runs.slice(-40),
     rivals: typeof seatLv !== 'undefined' ? { v: 2, lv: seatLv, st: seatStyle, dm: seatDomain } : saved.rivals, youLevel: typeof youLevel !== 'undefined' ? youLevel : saved.youLevel,
     youStyle: typeof youStyle !== 'undefined' ? youStyle : saved.youStyle }); }
 
@@ -2129,7 +2133,7 @@
   // The AI's state. level = Easy | Medium | Hard (AI_LEVELS); tracking .. off = its BELIEF about the next ring (aiBelief)
   function newAi(seed, level) {
     return { phase: 'cruise', side: 'R', t: 0, q: 0, cone: 12, wait: 0, seed: seed || 1, prevOff: null, fHold: 0, aimPt: new THREE.Vector3(), aimSet: false,
-      wHeld: -1, wDry: 0, wNear: 60, wWait: 0.5,
+      wHeld: -1, wDry: 0, wNear: 60, wWait: 0.5, wSwept: 0, wRate: 0, wLast: new THREE.Vector3(), wRest: 0,
       level: level || 'Hard', tracking: -1, noticeAt: 0, misjudged: false, until: 0, off: new THREE.Vector3(), unnoticed: false, mistakes: 0, think: 'ring' };
   }
   let ai = newAi(1);   // per pilot
@@ -2206,18 +2210,36 @@
       let trig = 0;
       if (standing && ai.wHeld >= 0) {
         ai.wHeld += dt; ai.wDry = ftLive.lime ? 0 : (ai.wDry || 0) + dt;
-        const letGo = blind || d < ai.wNear || (ai.wHeld > 0.8 && ai.wDry > ai.wWait);
-        if (letGo) ai.wHeld = -1; else trig = ai.q;
+        // At most one lap round the black hole. Circling the sink keeps the path lime every frame, so the hold never
+        // dried out and only ended near the ring: up to seven laps at the loop boost. Sum the angle swept round the sink
+        // (a jump through the wormhole is not a sweep) and let go so that the lap ENDS at aiMaxOrbit - the poles keep
+        // pulling until they close (ftSepFollow), so the sweep still to come while they close is counted now. The game's
+        // autopilotMaxOrbitDegrees, StoatDipoleMath.OrbitCapReached.
+        const step = hull.position.distanceTo(ai.wLast);
+        if (step < 4 * standing.rs + 50 && dt > 0) {
+          aiOff.subVectors(ai.wLast, standing.att); aiAim.subVectors(hull.position, standing.att);
+          if (aiOff.lengthSq() > 1e-6 && aiAim.lengthSq() > 1e-6) {
+            const sw = aiOff.angleTo(aiAim) * 180 / Math.PI;
+            ai.wSwept += sw; ai.wRate += (sw / dt - ai.wRate) * Math.min(1, dt * 8);
+          }
+        }
+        ai.wLast.copy(hull.position);
+        const closeThr = Math.max(1, 0.5 * (standing.rs + standing.rsR));
+        const closing = standing.sep > closeThr ? Math.log(standing.sep / closeThr) / Math.max(0.1, P.ftSepFollow) : 0;
+        const orbited = P.aiMaxOrbit > 0 && ai.wSwept + Math.max(0, ai.wRate) * closing >= P.aiMaxOrbit;
+        const letGo = blind || orbited || d < ai.wNear || (ai.wHeld > 0.8 && ai.wDry > ai.wWait);
+        if (letGo) { ai.wHeld = -1; if (orbited) { ai.wRest = P.aiOrbitRest; if (raceStats) raceStats.orbitCaps = (raceStats.orbitCaps || 0) + 1; } } else trig = ai.q;
       } else if (!standing) {
         ai.wHeld = -1;
-        if (!blind && P.aiSling > 0.5 && d > P.aiNear * 1.5) {
+        if (ai.wRest > 0) ai.wRest -= dt;   // after an orbit-capped let-go: fly out before laying the next pair
+        else if (!blind && P.aiSling > 0.5 && d > P.aiNear * 1.5) {
           if (ai.wait <= 0) ai.wait = 0.001 + n * aiRand() * 1.2;   // a rookie lays a beat late
           ai.wait -= dt;
           if (ai.wait <= 0) {
             ai.wait = 0; ai.side = Math.abs(phi) < Math.PI / 2 ? 'R' : 'L';
             ai.q = Math.max(0.05, Math.min(1, P.aiWarpQ - n * aiRand() * 0.7));   // a rookie squeezes short of full
             ai.wNear = Math.max(0, P.aiNear * (1 + n * (aiRand() - 0.5) * 1.6)); ai.wWait = Math.max(0.05, P.aiLimeWait * (1 + n * (aiRand() - 0.5) * 2));
-            ai.wHeld = 0; ai.wDry = 0; trig = ai.q;
+            ai.wHeld = 0; ai.wDry = 0; ai.wSwept = 0; ai.wRate = 0; ai.wLast.copy(hull.position); trig = ai.q;
           }
         }
       }
@@ -4270,6 +4292,8 @@
   document.querySelectorAll('[data-sling]').forEach((b) => b.addEventListener('click', () => setSlingMode(b.dataset.sling)));
   document.querySelectorAll('[data-sling]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.sling === slingMode ? 'true' : 'false'));
   $('portal').addEventListener('change', (e) => { portal[style] = e.target.checked; persist(); });
+  $('idleTakeover').checked = idleTakeover;
+  $('idleTakeover').addEventListener('change', (e) => { idleTakeover = e.target.checked; idleFor = 0; persist(); });
   document.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
   function setMode(m) {
     mode = m;
@@ -4579,7 +4603,7 @@
   // Your hull's input this step: yours, or (Is AI ticked, or nobody on the controls for IDLE_TAKEOVER_S) the AI's.
   function pilotInput(dt) {
     if (aiOn) return youAiInput(dt);
-    if (mode === 'fly' && race !== 'ready') { if (humanOnControls()) idleFor = 0; else idleFor += dt; } else idleFor = 0;   // racing, and after the finish too
+    if (idleTakeover && mode === 'fly' && race !== 'ready') { if (humanOnControls()) idleFor = 0; else idleFor += dt; } else idleFor = 0;   // racing, and after the finish too
     const idleAi = idleFor >= IDLE_TAKEOVER_S;
     if (idleAi !== wasIdleAi) { trackHold('L', 0, true, 0); trackHold('R', 0, true, 0); }   // a pair is never handed over
     wasIdleAi = idleAi;
@@ -4713,7 +4737,7 @@
   buildDocks();
   applyPlatform(true);
   requestAnimationFrame(frame);
-  window.__stoatStudio = { openWindow, dockWindow, selectTab, ide, PLATFORM, get layout() { return layout; }, set manualClock(v) { manualClock = !!v; }, tick(dt, n) { n = n || 1; for (let i = 0; i < n - 1; i++) { manualNow += dt * 1000; simStep(dt, pilotInput(dt), true); } manualNow += dt * 1000; advance(dt, manualNow); }, sim(dt, n) { for (let i = 0; i < n; i++) { manualNow += dt * 1000; simStep(dt, pilotInput(dt), true); } }, set courseKind(v) { courseKind = v; buildCourse(); spawn(); }, set intensity(v) { intensity = v; buildCourse(); spawn(); markIntensity(); }, get gates() { return gates; }, runBatch, batchTable, batchWinners, batchSummary, set lastBatchQs(v) { lastBatchQs = v; }, get flow() { return flow; }, get raceStats() { return raceStats; }, get aiOn() { return aiOn; }, set aiOn(v) { aiOn = !!v; }, set simSpeed(v) { simSpeed = v; }, set camMode(v) { camMode = v; }, ai, setPlayMode, touch, get playMode() { return playMode; }, GROUP_TYPES, applyType, activeType, showTypeTip: (g, i) => { const b = document.querySelector('#types-' + g + ' button[data-i="' + i + '"]'); showTypeTip(g, i, b, true); }, nextGate: () => gates[threaded % 8].p.clone(), BP, STYLES, styleBump, recomputeP, refreshAllOuts, get liveStyles() { return liveStyles; }, set liveStyles(v) { liveStyles = !!v; }, get crystals() { return crystals; }, get waves() { return waves; }, get stopped() { return stopped; }, setStopped, get myPair() { return myPair; }, get dipole() { return slingDipole; }, get lastDipole() { return lastDipole; }, get gravSpeed() { return gravSpeed; }, get speed() { return speed; }, setSlingMode, get orbit2() { return slingOrbit; }, aimAt(x, y, z) { const m = new THREE.Matrix4().lookAt(hull.position, new V3(x, y, z), Y); hull.quaternion.setFromRotationMatrix(m); }, orbit, P, get style() { return style; }, sling, startRace, setMode, setStyle, holds, hull, get pairs() { return pairs; }, get race() { return race; }, vg, vf,
+  window.__stoatStudio = { openWindow, dockWindow, selectTab, ide, PLATFORM, get layout() { return layout; }, set manualClock(v) { manualClock = !!v; }, tick(dt, n) { n = n || 1; for (let i = 0; i < n - 1; i++) { manualNow += dt * 1000; simStep(dt, pilotInput(dt), true); } manualNow += dt * 1000; advance(dt, manualNow); }, sim(dt, n) { for (let i = 0; i < n; i++) { manualNow += dt * 1000; simStep(dt, pilotInput(dt), true); } }, set courseKind(v) { courseKind = v; buildCourse(); spawn(); }, set intensity(v) { intensity = v; buildCourse(); spawn(); markIntensity(); }, get gates() { return gates; }, runBatch, batchTable, batchWinners, batchSummary, set lastBatchQs(v) { lastBatchQs = v; }, get flow() { return flow; }, get raceStats() { return raceStats; }, get aiOn() { return aiOn; }, set aiOn(v) { aiOn = !!v; }, get idleTakeover() { return idleTakeover; }, set idleTakeover(v) { idleTakeover = !!v; idleFor = 0; }, set simSpeed(v) { simSpeed = v; }, set camMode(v) { camMode = v; }, ai, setPlayMode, touch, get playMode() { return playMode; }, GROUP_TYPES, applyType, activeType, showTypeTip: (g, i) => { const b = document.querySelector('#types-' + g + ' button[data-i="' + i + '"]'); showTypeTip(g, i, b, true); }, nextGate: () => gates[threaded % 8].p.clone(), BP, STYLES, styleBump, recomputeP, refreshAllOuts, get liveStyles() { return liveStyles; }, set liveStyles(v) { liveStyles = !!v; }, get crystals() { return crystals; }, get waves() { return waves; }, get stopped() { return stopped; }, setStopped, get myPair() { return myPair; }, get dipole() { return slingDipole; }, get lastDipole() { return lastDipole; }, get gravSpeed() { return gravSpeed; }, get speed() { return speed; }, setSlingMode, get orbit2() { return slingOrbit; }, aimAt(x, y, z) { const m = new THREE.Matrix4().lookAt(hull.position, new V3(x, y, z), Y); hull.quaternion.setFromRotationMatrix(m); }, orbit, P, get style() { return style; }, sling, startRace, setMode, setStyle, holds, hull, get pairs() { return pairs; }, get race() { return race; }, vg, vf,
     get rivals() { return rivals; }, standings, raceOnce, runLevelScorecard, levelTable, levelCell, AI_LEVELS, STYLE_BRAIN, get youLevel() { return youLevel; }, get watchIdx() { return watchIdx; }, nextCamera, get threaded() { return threaded; }, get raceT() { return raceT; }, panel: () => racePanelRef };
   // The labmaker contract (.claude/skills/labmaker/SKILL.md §2.2): the same object, with the members verify_lab.cjs reads.
   Object.assign(window.__stoatStudio, {
