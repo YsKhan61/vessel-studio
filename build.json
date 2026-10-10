@@ -1,0 +1,11 @@
+{
+  "repo": "froglet-studio/cosmic-shore",
+  "branch": "Ys-bleeding-edge",
+  "sha": "798335e71013280e2a4b7b08b3b90e0e1d0e489d",
+  "pathSha": "cd963f7d503cf334d6342a440513abc956fe0707",
+  "subject": "fix(vessel-studio): Stop holds the race until Play (the AI-flown Stoat restarted itself)",
+  "committedAt": "2026-10-10T00:21:51Z",
+  "publishedAt": null,
+  "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
+  "session": null
+}
