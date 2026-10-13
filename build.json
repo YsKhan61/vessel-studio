@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "9393e9026f02296228258a98831937b2ee49e46b",
-  "pathSha": "9393e9026f02296228258a98831937b2ee49e46b",
-  "subject": "feat(vessel-studio): idle takeover is an AI Config switch; the Amoebius studio plan; WebAssembly to-do",
-  "committedAt": "2026-10-10T02:48:36Z",
+  "sha": "9c2d49acb3e54f2ff8b5e924a20577ba21c1fb77",
+  "pathSha": "8fbb20262174149f8009ce15d5279bf0d647e1ca",
+  "subject": "Merge Ys-bleeding-edge into vessel-studio-parity (TUNE IN UNITY stays removed; PR rules renumbered D34/D35)",
+  "committedAt": "2026-10-13T20:42:06Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
