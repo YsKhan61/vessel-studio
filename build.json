@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "c43172d4336cc49b1d056333bdd72874355adeb8",
-  "pathSha": "999fbd0113ebd5404a8929f0233d7f653aaaa52d",
-  "subject": "fix(vessel-studio): Sync jobs reach the repo through whichever remote points at it, not always origin",
-  "committedAt": "2026-10-14T15:57:27Z",
+  "sha": "f485613d7c2c90224e464022b1a00358637e375d",
+  "pathSha": "f485613d7c2c90224e464022b1a00358637e375d",
+  "subject": "feat(vessel-studio): + New studio on Amoebius's VESSEL STUDIO page too; every studio feature on all three surfaces (D37)",
+  "committedAt": "2026-10-14T17:03:37Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
