@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "f485613d7c2c90224e464022b1a00358637e375d",
-  "pathSha": "f485613d7c2c90224e464022b1a00358637e375d",
-  "subject": "feat(vessel-studio): + New studio on Amoebius's VESSEL STUDIO page too; every studio feature on all three surfaces (D37)",
-  "committedAt": "2026-10-14T17:03:37Z",
+  "sha": "8972a11a18375ffb6fdff75720f256dc37723b05",
+  "pathSha": "30e4a90e0900219fcb43f170eb3fb655a18ce0e4",
+  "subject": "feat(stoat): the catch sling flies at the field's pace; T switches mode in the studio too",
+  "committedAt": "2026-10-14T20:51:47Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
