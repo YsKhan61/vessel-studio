@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "8972a11a18375ffb6fdff75720f256dc37723b05",
-  "pathSha": "30e4a90e0900219fcb43f170eb3fb655a18ce0e4",
-  "subject": "feat(stoat): the catch sling flies at the field's pace; T switches mode in the studio too",
-  "committedAt": "2026-10-14T20:51:47Z",
+  "sha": "e51c1ce9668692e13c002593ee4638e0150763fa",
+  "pathSha": "dd289cb633995ce0f29b0815ac249bd1a609b752",
+  "subject": "Merge origin/Ys-bleeding-edge into Ys-bleeding-edge: HyperSea joins the new card model",
+  "committedAt": "2026-10-14T23:55:29Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
