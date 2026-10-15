@@ -86,29 +86,33 @@
       "engineMode": "Slingshot"
     },
     {
-      "id": "hypersea",
-      "name": "HyperSea",
-      "file": "hypersea.html",
-      "kind": "fleet AI simulation - round 1",
-      "chip": "fleet AI simulation · round 1",
-      "summary": "Every vessel in the project in one cell, under one rule set, flown by AI at Easy, Medium or Hard on its shipped speed, turn rates and trail, each working its signature move. Watch any hull, take one over, and score the whole fleet to see which one holds the HyperSea.",
+      "id": "brittlestar",
+      "name": "Brittle Star",
+      "file": "brittlestar.html",
+      "kind": "the Unity build - round 2",
+      "chip": "the Unity build · round 2",
+      "summary": "The Brittle Star as it ships (BrittleStar = 16): a cockpit inside a pentagon of five engines and five guns. Speed (x6), Creation (the slowest, a trail per ring corner) and Destruction (five auto-firing arms the stick moves in and out), and the support ring thrown as a nucleus-wide disk. Demolition Derby and Fauna Frenzy at four intensities, AI rivals at Easy, Medium or Hard flying four element personas, and a scorecard that races every level and style.",
       "spec": [
         {
-          "k": "Fleet",
-          "v": "15 hulls (12 registered, 3 planned)"
+          "k": "Modes",
+          "v": "Cruise · Speed · Creation · Destruction"
         },
         {
-          "k": "Players",
-          "v": "up to 16, a vessel each"
+          "k": "Ring",
+          "v": "a nucleus-wide disk; a crystal rebuilds it"
         },
         {
-          "k": "Scorecard",
-          "v": "fleet ranking · AI levels"
+          "k": "Flight",
+          "v": "one stick · 45 u/s, 270 in Speed"
+        },
+        {
+          "k": "Games",
+          "v": "Demolition Derby · Fauna Frenzy"
         }
       ],
-      "preview": "previews/hypersea.png",
-      "accent": "blue",
-      "docs": "Docs/Studios/VesselStudio/README.md"
+      "preview": "previews/brittlestar.png",
+      "accent": "#7fd7ff",
+      "docs": "Docs/Studios/BRITTLE_STAR.md"
     }
   ],
   "newCard": {
@@ -128,10 +132,9 @@
     "Scarab",
     "Butterfly",
     "Termite",
-    "Falcon",
     "Shrike"
   ],
-  "fleetNote": "No studio of their own yet; every one of them flies in the HyperSea. Press a vessel, or + New studio, to start one; each needs the vessel's own numbers read from its assets first.",
+  "fleetNote": "No studio yet. Press a vessel, or + New studio, to start one; each needs the vessel's own numbers read from its assets first.",
   "shared": [
     "studio-look.js",
     "studio-ide.js",
