@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "03fef65ded6053e5a03924190a3e2ccf3df61c6e",
-  "pathSha": "59931c45e4dd9df70150f9fb96d4e461aa453f00",
-  "subject": "feat(regatta-ai): a You / AI toggle on every player, live mid-race",
-  "committedAt": "2026-10-15T18:14:45Z",
+  "sha": "a4651c844d92ae105b6ee393fedc255b217ce66c",
+  "pathSha": "a4651c844d92ae105b6ee393fedc255b217ce66c",
+  "subject": "chore(regatta-ai): delete the Regatta AI artifact and its page; tests happen in the Unity editor",
+  "committedAt": "2026-10-15T23:19:25Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
