@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "658fda1195e9ec18a452d7d7a21f919e7770c5ae",
-  "pathSha": "2334925a7c1188286856e33c2dd1dd66b76be03e",
-  "subject": "docs(brittlestar): ship pass - reference docs, studio hub card, lab capture, team tasks",
-  "committedAt": "2026-10-16T21:17:19Z",
+  "sha": "18689cac495d0f28ca617c617587e2ddd8d62a15",
+  "pathSha": "989e690e4be745ccd20c2b8c441e159d5922eada",
+  "subject": "fix(vessel-studio): the Albatross flies as a glider; the concept fleet's four-course scorecard",
+  "committedAt": "2026-10-17T19:37:22Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
