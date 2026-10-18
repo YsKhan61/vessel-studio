@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "32ca6e97888e89fea808aaa939c04e97692da7dd",
-  "pathSha": "aa147e830a1734efd17e6136168d8a3fff3f7db7",
-  "subject": "merge: bleeding-edge (47b32fd8a) into Ys-bleeding-edge",
-  "committedAt": "2026-10-18T03:59:13Z",
+  "sha": "b2bd220bb3c394a8ec3a5e0847c2b8c452543ae5",
+  "pathSha": "6e8487298a153be183f2b1425b64f825dd90e3c1",
+  "subject": "feat(vessel-studio): the Gibbon is a web-slinger - no engine, elastic webs from both hands",
+  "committedAt": "2026-10-18T04:39:51Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
