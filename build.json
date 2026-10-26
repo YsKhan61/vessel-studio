@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "01b26e94270077abe37ad388bb78e71b04b3e3ad",
-  "pathSha": "aa922013117ed2dce631aef3aff024a31e2ece12",
-  "subject": "merge: bleeding-edge (68be5306a5, #1481) into Ys-bleeding-edge - a week of upstream (611 commits)",
-  "committedAt": "2026-10-24T19:03:10Z",
+  "sha": "6ae7c28240095999a58dc0d35ee11d8c26dcc77b",
+  "pathSha": "3a75bb4563898a6a5ca836e1e0e42faeb1045e60",
+  "subject": "feat(vessel-studio): the Omega Crews studio - combiner crew vessels (mega forms, one omega form, three seats)",
+  "committedAt": "2026-10-26T16:23:01Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
