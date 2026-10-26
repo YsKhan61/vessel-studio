@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "d1f47c4355647814eee9c7c9c64596b2b655faff",
-  "pathSha": "7c7219a6f6245124c512e7619745570e45563cd5",
-  "subject": "feat(stoat): Gate mode replaces Drive - a warp gate of real black and white holes (B's third press)",
-  "committedAt": "2026-10-26T21:02:56Z",
+  "sha": "bfcf74a42ccc6dcc71848c142b64bb7f623ec437",
+  "pathSha": "1d00de82cd6d9a77edd5b8e4db7bbf90fed2b463",
+  "subject": "fix(vessel-studio): the hub's Stoat spec line had three unescaped apostrophes that broke the hub's script; every card preview re-baked",
+  "committedAt": "2026-10-26T22:07:46Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
