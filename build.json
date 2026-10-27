@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "c1a6274ed2b69b17a9a6fd4e9f468900cf1d8807",
-  "pathSha": "c1a6274ed2b69b17a9a6fd4e9f468900cf1d8807",
-  "subject": "feat(meerkat-studio): round 14 - the tree is the tunnel's outer layer, formed with it in the wall's glass and warp (artifact only)",
-  "committedAt": "2026-10-27T22:20:03Z",
+  "sha": "98243af8e17ec5a14a96b74ffb575ae0504f2f92",
+  "pathSha": "98243af8e17ec5a14a96b74ffb575ae0504f2f92",
+  "subject": "Merge remote-tracking branch 'origin/Ys-bleeding-edge' into claude/adoring-cerf-m94x1o",
+  "committedAt": "2026-10-27T23:12:06Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null

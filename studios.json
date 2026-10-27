@@ -58,8 +58,8 @@
       "id": "stoat",
       "name": "Stoat",
       "file": "stoat.html",
-      "kind": "design studio - round 28",
-      "chip": "design studio · round 28",
+      "kind": "design studio - round 30",
+      "chip": "design studio · round 30",
       "summary": "The slinger. Squeeze a trigger to lay a black-white hole pair and sling round it. Five play styles, momentum carry, a four-level course ladder, an AI sim lab that races every style and scores it, and two modes on T, the game's B: Mass (the field trajectory, a predicted path that boosts you when the poles bend it) and Time (the catch sling, timed at 90°). Its wormhole mode became the Meerkat (2026-10-27). Editor layout with tabs and pop-out windows; touch sticks on a phone.",
       "spec": [
         {
@@ -113,6 +113,35 @@
       "preview": "previews/meerkat.png",
       "accent": "#4fd8ff",
       "docs": "Docs/Studios/MEERKAT.md"
+    },
+    {
+      "id": "gopher",
+      "name": "Gopher",
+      "file": "gopher.html",
+      "kind": "design studio - round 1",
+      "chip": "design studio · round 1",
+      "summary": "The burrowing vessel. One thumb flies; the wireframe on your nose is the burrow RT would dig: a warren of channels, entrances in front, rows of forks, exits spread on the far side. LT digs it deeper, the right stick turns it, RT digs it and you slide in, faster at every fork; lean the left stick at each fork to take its left or right channel. Everyone sees it dug through soil: earth walls in layered strata, stones and roots.",
+      "spec": [
+        {
+          "k": "Ability",
+          "v": "the burrow, on one thumb"
+        },
+        {
+          "k": "Network",
+          "v": "3 in · 2 rows of forks · 4 out"
+        },
+        {
+          "k": "Ride",
+          "v": "slide, lean left or right at forks"
+        },
+        {
+          "k": "Status",
+          "v": "design only: no Gopher in the game yet"
+        }
+      ],
+      "preview": "previews/gopher.png",
+      "accent": "#c9a06a",
+      "docs": "Docs/Studios/GOPHER.md"
     },
     {
       "id": "brittlestar",
