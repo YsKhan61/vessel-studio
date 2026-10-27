@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "c8a56668323088873b7a06aaccb3d3a22977e4f2",
-  "pathSha": "2ca3a4089d086486a602a04246a0c53410defb97",
-  "subject": "feat(meerkat): round 10 - the hull at the centre of the screen; edit-time throat and mouth diameters",
-  "committedAt": "2026-10-27T20:25:47Z",
+  "sha": "0e801d3000ec8c767ec0736cc5fa379dc9cc759e",
+  "pathSha": "b55ca18b3d80ce97239faac920e151b575bf7f16",
+  "subject": "feat(meerkat-studio): round 12 - the tunnel grows with its length and is a tree from outside (artifact only)",
+  "committedAt": "2026-10-27T21:29:45Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
