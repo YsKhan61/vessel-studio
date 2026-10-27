@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "6539e0bf1c890050c2418ed454ddf5a4fd88e3a1",
-  "pathSha": "f24f26e590e1b2c19d39fd51725c2cd0c71f0b55",
-  "subject": "feat(siphonophore): Pulse Jet - the Bell inhales on RT and jets on release, chaining on the beat",
-  "committedAt": "2026-10-27T01:27:02Z",
+  "sha": "c179fdf29041f205f781b1dde8d3e3172735bde8",
+  "pathSha": "c179fdf29041f205f781b1dde8d3e3172735bde8",
+  "subject": "feat(stoat-studio): round 27 - save any settings section as a named profile",
+  "committedAt": "2026-10-27T02:13:36Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
