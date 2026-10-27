@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "3247b4d70df6a62fbb0a0de38b14e213ed0d57aa",
-  "pathSha": "c72c7df0cf0d49b0b981ab8a5576074f1a31fc6c",
-  "subject": "Merge branch 'claude/adoring-cerf-m94x1o' into Ys-bleeding-edge",
-  "committedAt": "2026-10-26T23:50:41Z",
+  "sha": "6539e0bf1c890050c2418ed454ddf5a4fd88e3a1",
+  "pathSha": "f24f26e590e1b2c19d39fd51725c2cd0c71f0b55",
+  "subject": "feat(siphonophore): Pulse Jet - the Bell inhales on RT and jets on release, chaining on the beat",
+  "committedAt": "2026-10-27T01:27:02Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
