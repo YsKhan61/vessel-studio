@@ -410,8 +410,8 @@
       <details class="card" id="grp-look" open><summary>Wormhole · look <small>MeerkatWormholeConfig · the bridge, everyone's</small></summary><div class="rows"></div>
         <p class="src"><b>One geometry for the wormhole and your reticle</b>: your reticle is this frame, bare. <b>A formed tunnel shows everyone its bridge</b>: rings and ribs of spindles over a glass surface, in its maker's domain colour toward white (<i>bridgeWhite</i>) (the game will build it from its Spindle prefabs), condensing out of its centre as it forms and evaporating as it collapses. <i>bridgeVisibility</i> 0 leaves only the bent space.</p>
         <div class="btns"><button class="pick" type="button" data-reset="look">Reset</button></div></details>
-      <details class="card" id="grp-tree" open><summary>Wormhole · tree <small>MeerkatWormholeConfig · its outside, for a third eye</small></summary><div class="rows"></div>
-        <p class="src"><b>Round 12: a formed tunnel is a tree</b> to everyone watching it from outside. You go in through its <b>crown</b> (branches reaching back from the way in), ride down its <b>trunk</b> and come out through its <b>roots</b> (splaying past the way out). Its bark is the <b>omni crystal's own plates</b>, the four element shapes (Mass triangles, Space squares, Time rhombi, Charge pentagons) in a spiral, lifted off the wall like scales, with a slow wave running crown to roots. Whoever rides it does not see it: the ride stays the clear pipe. It also grows with the tunnel: a longer tunnel is a thicker trunk (<i>throatDiameterMax</i>, <i>mouthDiameterMax</i>).</p>
+      <details class="card" id="grp-tree" open><summary>Wormhole · trunk <small>MeerkatWormholeConfig · its outside, for a third eye</small></summary><div class="rows"></div>
+        <p class="src"><b>The tunnel's outer layer is a dead tree</b>, for everyone (its rider too). Pull RT and the tree <b>forms with the tunnel</b>, rippling out of its centre to both mouths; each <b>bare branch grows</b> out of the trunk's top half the moment the tunnel reaches its root. The way in is the trunk's <b>top cut</b> and the way out its <b>bottom cut</b>, the mouths in the cut faces among the <b>tree rings</b>. It is the <b>wall's own glass and bent space</b> (see-through in the middle, bright at its outline, the world behind it bent and flowing like water), so the tunnel shows inside it. It grows with the tunnel (<i>throatDiameterMax</i>, <i>mouthDiameterMax</i>).</p>
         <div class="btns"><button class="pick" type="button" data-reset="tree">Reset</button></div></details>
       <details class="card" id="grp-space" open><summary>Space · look <small>MeerkatWormholeConfig · the bent space, everyone's</small></summary><div class="rows"></div>
         <p class="src"><b>Off by default</b> (round 4: all lensing off; the bridge is the tunnel's look). Raised, <b>everyone sees</b> a tunnel bend space-time: the space round its tube bent away from it (<i>warpStrength</i>), its centre line clear, and each mouth a dent as wide as the mouth (<i>dentStrength</i>). Its collapse sends a <b>subtle circular ripple across the screen's edges only</b> (<i>rippleStrength</i>, from <i>rippleEdge</i> out, over <i>rippleSeconds</i>), never the centre where you aim, weaker the further away it is.</p>
@@ -517,13 +517,14 @@
     // round 9: this geometry is the reticle's too; the spindles are the maker's domain colour toward white by bridgeWhite
     bridgeVisibility: 0.163, bridgeGlass: 0.15, bridgeRings: 36, bridgeSpindlesPerRing: 21, bridgeRibs: 5, bridgeSpindleThickness: 0.25, bridgeShimmer: 0.5,
     bridgeWhite: 0.45,
-    // round 12, the tree (the tunnel's outside, for a third eye; hidden from its rider): bark of omni plates, coatPerRing
-    // round the trunk at coatPlateScale x the ring's share, lifted coatLift x the radius off the wall and tilted coatTilt deg
-    // like scales, a wave (coatWave, coatWaveSpeed waves a second) running crown to roots; the crown's crownBranches limbs
-    // reach crownLength x the mouth back from the way in, crownSpread deg off the axis; rootCount roots splay rootLength x
-    // the mouth past the way out, curling rootSpread deg; every limb coatLimbThickness x the mouth's radius thick at its base
-    coatVisibility: 1, coatPerRing: 14, coatPlateScale: 0.9, coatLift: 0.18, coatTilt: 22, coatWave: 0.6, coatWaveSpeed: 0.3,
-    crownBranches: 7, crownLength: 1.6, crownSpread: 60, rootCount: 9, rootLength: 1.8, rootSpread: 50, coatLimbThickness: 0.15,
+    // rounds 13-14, the tree (the tunnel's outer layer, everyone's): a dead tree's trunk round the tunnel, trunkTop x the mouth
+    // at the way in (its top cut) to trunkBase x at the way out (its bottom cut), ridged and gnarled, trunkRings tree rings
+    // on the cut faces; branchCount bare branches out of its top branchZone, in pairs (branchSymmetry), forking branchForks
+    // times. It forms WITH the tunnel (its window), each branch growing over branchGrowSeconds once the front passes its
+    // root; it is the wall's glass and bent space (trunkWarp), flowing like water
+    trunkVisibility: 1, trunkTop: 1.25, trunkBase: 1.6, trunkBark: 0.18, trunkRidges: 14, trunkGnarl: 0.1,
+    trunkGlass: 0.03, trunkRim: 0.6, trunkFresnel: 2.5, trunkRings: 6, trunkWarp: 0.25,
+    branchCount: 6, branchLength: 2.2, branchThickness: 0.3, branchUp: 40, branchZone: 0.5, branchSymmetry: 0.7, branchForks: 2, branchGrowSeconds: 0.5,
     // the AI's wormhole
     aiWormhole: 1, aiStraightMinDistance: 300, aiBentMinDistance: 120, aiShapeSeconds: 0.3, aiTau: 0.3, aiNoise: 0,
     // flight: one thumb (the left stick flies at full throttle, banking bankShare x the roll rate into a turn); the Stoat's
@@ -591,20 +592,25 @@
     ['look', 'bridgeSpindleThickness', '...spindle thickness (u)', 0.1, 6, 0.05],
     ['look', 'bridgeShimmer', '...a shimmer running way in to way out', 0, 1, 0.05],
     ['look', 'bridgeWhite', '...its spindles\' colour: the domain colour toward white', 0, 1, 0.05],
-    ['tree', 'coatVisibility', 'The tree round a formed tunnel, for everyone else (0 = hidden)', 0, 1, 0.05],
-    ['tree', 'coatPerRing', 'Bark: omni plates round the trunk', 3, 32, 1],
-    ['tree', 'coatPlateScale', '...each plate\'s size (share of its slot)', 0.2, 1.5, 0.05],
-    ['tree', 'coatLift', '...lifted off the wall (× the radius)', 0, 1, 0.01],
-    ['tree', 'coatTilt', '...tilted like scales (°)', 0, 60, 1],
-    ['tree', 'coatWave', '...a wave running crown to roots (strength)', 0, 1.5, 0.05],
-    ['tree', 'coatWaveSpeed', '...its speed (waves a second)', 0, 2, 0.05],
-    ['tree', 'crownBranches', 'Crown at the way in: branches', 0, 16, 1],
-    ['tree', 'crownLength', '...their length (× the mouth\'s radius)', 0, 4, 0.05],
-    ['tree', 'crownSpread', '...spread off the axis (°)', 0, 90, 1],
-    ['tree', 'rootCount', 'Roots at the way out', 0, 20, 1],
-    ['tree', 'rootLength', '...their length (× the mouth\'s radius)', 0, 4, 0.05],
-    ['tree', 'rootSpread', '...how far they curl out (°)', 0, 140, 1],
-    ['tree', 'coatLimbThickness', 'Branch and root thickness (× the mouth\'s radius)', 0.02, 0.6, 0.01],
+    ['tree', 'trunkVisibility', 'The tree: the tunnel\'s outer layer, for everyone (0 = hidden)', 0, 1, 0.05],
+    ['tree', 'trunkTop', 'Trunk at the way in (× the mouth\'s radius)', 1, 3, 0.05],
+    ['tree', 'trunkBase', 'Trunk at the way out (× the mouth\'s radius)', 1, 3, 0.05],
+    ['tree', 'trunkBark', 'Bark ridges: depth (× the radius)', 0, 0.5, 0.01],
+    ['tree', 'trunkRidges', '...ridges round the trunk', 3, 40, 1],
+    ['tree', 'trunkGnarl', '...slow gnarled wobble', 0, 0.3, 0.01],
+    ['tree', 'trunkGlass', 'Its glass face-on (the see-through middle)', 0, 0.5, 0.01],
+    ['tree', 'trunkRim', 'Its glass at the silhouette (Fresnel)', 0, 2, 0.05],
+    ['tree', 'trunkFresnel', '...how tight to the silhouette (power)', 0.5, 8, 0.1],
+    ['tree', 'trunkRings', 'Tree rings on the cut ends', 1, 20, 1],
+    ['tree', 'trunkWarp', 'Space bent by the tree (strength)', 0, 2, 0.05],
+    ['tree', 'branchCount', 'Branches, in pairs', 0, 16, 1],
+    ['tree', 'branchLength', '...their length (× the mouth\'s radius)', 0, 4, 0.05],
+    ['tree', 'branchThickness', '...thickness at the base (× the mouth\'s radius)', 0.02, 0.8, 0.01],
+    ['tree', 'branchUp', '...leaning toward the top (°)', 0, 80, 1],
+    ['tree', 'branchZone', '...out of the trunk\'s top (share of its length)', 0.1, 1, 0.05],
+    ['tree', 'branchSymmetry', '...each pair mirrored (1) or each its own (0)', 0, 1, 0.05],
+    ['tree', 'branchForks', '...times each forks', 0, 3, 1],
+    ['tree', 'branchGrowSeconds', '...each grows over (s), once the tunnel reaches it', 0.1, 4, 0.05],
     ['ai', 'aiWormhole', 'AI uses the wormhole (0 = no, 1 = yes)', 0, 1, 1],
     ['ai', 'aiStraightMinDistance', 'AI: a straight tunnel with its ring at least (u) away', 50, 2000, 10],
     ['ai', 'aiBentMinDistance', 'AI: a bending one from (u) away', 50, 2000, 10],
@@ -1729,107 +1735,204 @@
   // Your reticle (round 9): the wormhole's wireframe (drawFrame), no glass, in your domain colour toward white by reticleWhite.
   const RET_NEAR = 1, RET_FULL = 8;   // a reticle spindle fades only right at the camera (it is 30 u ahead of the nose)
   function drawReticle(wh, A) { drawFrame(wh, A, pilotColor(0).lerp(brW, clamp01(P.reticleWhite)), RET_NEAR, RET_FULL, P.reticleNearLight); }
-  // ================= round 12: the tree - a formed tunnel's outside, seen from a third eye =================
-  // Yash, 2026-10-28: "an upper coating around the wormhole to be visible from a third perspective ... the pattern of the
-  // omnicrystal ... it will look like a tree trunk that will rise from a small diameter to branches ... we use the upper
-  // part of the tree to get inside and the root area to get out." The way in is the CROWN (branches of spindles reaching
-  // back from the mouth's rim, forking), the tube is the TRUNK (its bark: the omni crystal's own plates - Mass triangles,
-  // Space squares, Time rhombi, Charge pentagons - lifted off the wall like scales, in spiralling rows, a slow wave running
-  // crown to roots as the omni's flip wave does), the way out is the ROOTS (limbs splaying past the far mouth). It is the
-  // tunnel's outside only: hidden from whoever is riding it (the ride stays the clear pipe), and its pieces near any camera
-  // shrink away. Every piece is an instance of one of four plate meshes or the bridge's spindle: a few draws a frame.
-  const TREE_MAX = 2400;
-  const plateGeo = (n, rh) => {   // a thin faceted plate, unit circumradius 0.5, lying in x-y, thickness along z
-    const sh = new THREE.Shape();
-    for (let i = 0; i < n; i++) {
-      const a = (i / n) * Math.PI * 2 + Math.PI / 2, r = rh && i % 2 ? 0.5 * 0.618 : 0.5;   // the rhombus: a golden diamond
-      if (i) sh.lineTo(Math.cos(a) * r, Math.sin(a) * r); else sh.moveTo(Math.cos(a) * r, Math.sin(a) * r);
-    }
-    sh.closePath();
-    const g = new THREE.ExtrudeGeometry(sh, { depth: 0.12, bevelEnabled: true, bevelThickness: 0.04, bevelSize: 0.04, bevelSegments: 1 });
-    g.translate(0, 0, -0.06); return g;
-  };
-  // the omni's four plate families (Docs/TIME_CRYSTAL.md, OMNI_MOTION_LAB.md): Mass triangle, Space square, Time rhombus, Charge pentagon
-  const treePlates = [plateGeo(3), plateGeo(4), plateGeo(4, true), plateGeo(5)].map((g) => {
-    const m = new THREE.InstancedMesh(g, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.35, metalness: 0.15, flatShading: true, emissive: 0xffffff, emissiveIntensity: 0.12 }), TREE_MAX);
-    m.setColorAt(0, new THREE.Color()); m.instanceColor.setUsage(THREE.DynamicDrawUsage); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
-    m.frustumCulled = false; m.count = 0; scene.add(m); return m;
-  });
-  const treeN = [0, 0, 0, 0], trP = new V3(), trT = new V3(), trX = new V3(), trY = new V3(), trM = new THREE.Matrix4(), trQ = new THREE.Quaternion(), trS = new V3(), trC = new THREE.Color(), trAx = new V3();
-  const SHAPE_TINT = [0.62, 0.8, 0.92, 1];   // each family a step lighter, so the spiral of shapes reads on the bark
-  function riddenByView(pr) {   // the pilot the camera watches is riding this tunnel: the tree is not theirs to see
-    const r = mode === 'fly' && watchIdx > 0 ? rivals[watchIdx - 1] : null, lv = liveOf(r ? r.id : 0);
-    return !!(lv && lv.gate && lv.gate.state === 'tube' && lv.gate.pair === pr);
+  // ================= rounds 13-14: the tree - the tunnel's outer layer =================
+  // Round 14 (Yash, 2026-10-28: "the moment AI or player ... press their right trigger to create the tunnel, the tunnel will
+  // automatically be created with the trunk, not separate from the trunk ... no additional ... shader or anything, just the
+  // way the entire tube is getting created, we will just extend the outer layer of the tube to some tree-like structure with
+  // big similar symmetrical or asymmetrical but similar branches from the top half ... the wormhole is actually a portion of
+  // the trunk of the dead tree ... the entire tree will be this watery glassy space-time warp effect, like the wall").
+  // One static mesh per tunnel, built the frame RT forms it: the trunk round the whole tunnel (trunkTop x the mouth at the
+  // way in, its top cut, to trunkBase x at the way out, its bottom cut, never inside the tube; ridged by trunkBark /
+  // trunkRidges, gnarled by trunkGnarl; the cut faces show trunkRings tree rings), and branchCount bare branches out of its
+  // top branchZone share, in pairs (branchSymmetry 1 = mirrored, 0 = each its own place), leaning branchUp toward the top,
+  // branchLength x the mouth long, branchThickness x it thick, tapering to points and forking branchForks times.
+  // It FORMS WITH THE TUNNEL: the trunk shows exactly the tunnel's window [s0, s1] (rippling out of its centre to both
+  // mouths over formSeconds, back in as it collapses), and each branch grows over branchGrowSeconds from the moment the
+  // window's front passes its root. Its look is the wall's: the same glass (the domain colour at the way in toward white at
+  // the way out; trunkGlass face-on, trunkRim x the trunkFresnel power at its silhouette) and the same bent space (the
+  // tube's warp, into rtWarp, trunkWarp strong), both flowing slowly top to bottom like water. Everyone sees it, its rider too.
+  const TRUNK_RINGS = 56, TRUNK_SEG = 36, BR_SIDES = 8, BR_MAXN = 16;
+  const treeVS = [
+    'attribute float aS; attribute float aBi; attribute float aCap; attribute float aR; attribute float aB; attribute vec3 aBase;',
+    'uniform float bg[16];',
+    'varying float vS; varying float vCap; varying float vR; varying float vB; varying float vG; varying vec3 vN; varying vec3 vV;',
+    'void main(){',
+    '  float g = 1.0; vec3 p = position;',
+    '  if (aBi > -0.5) { g = bg[int(aBi + 0.5)]; p = aBase + (position - aBase) * g; }',   // a branch grows out of its root
+    '  vec4 mv = modelViewMatrix * vec4(p, 1.0); vV = normalize(-mv.xyz); vN = normalize(normalMatrix * normal);',
+    '  vS = aS; vCap = aCap; vR = aR; vB = aB; vG = g; gl_Position = projectionMatrix * mv; }',
+  ].join('\n');
+  // shared by both passes: outside the tunnel's window (f0..f1, way in 0 -> way out 1) nothing; condensing at its fronts
+  const treeWin = [
+    'uniform float f0; uniform float f1; uniform float edge; uniform float t;',
+    'varying float vS; varying float vCap; varying float vR; varying float vB; varying float vG; varying vec3 vN; varying vec3 vV;',
+    'float win(){ if (vG < 0.01 || vS < f0 || vS > f1) discard; return smoothstep(0.0, edge, min(vS - f0, f1 - vS)); }',
+    'float flow(){ return 0.75 + 0.25 * sin((vS + vB) * 23.0 - t * 2.4); }',   // water running top to bottom
+  ].join('\n');
+  function treeMaterials() {
+    const U = { bg: { value: new Array(BR_MAXN).fill(0) }, f0: { value: 0 }, f1: { value: 1 }, edge: { value: 0.06 }, t: { value: 0 } };
+    const glass = new THREE.ShaderMaterial({
+      uniforms: Object.assign({ cIn: { value: new THREE.Color() }, cOut: { value: new THREE.Color() }, alpha: { value: 1 }, glass: { value: 0.03 },
+        rim: { value: 0.6 }, power: { value: 2.5 }, rings: { value: 6 } }, U),
+      vertexShader: treeVS,
+      fragmentShader: [treeWin,
+        'uniform vec3 cIn; uniform vec3 cOut; uniform float alpha; uniform float glass; uniform float rim; uniform float power; uniform float rings;',
+        'void main(){',
+        '  float w = win();',
+        '  float fr = pow(1.0 - abs(dot(normalize(vN), normalize(vV))), power);',   // the wall's glass: Fresnel at the silhouette
+        '  float a = glass + rim * fr;',
+        '  if (vCap > 0.5) a = glass + rim * (0.6 * pow(0.5 + 0.5 * cos(vR * rings * 6.2831853), 8.0) + 0.4 * smoothstep(0.85, 1.0, vR));',
+        '  gl_FragColor = vec4(mix(cIn, cOut, vS) * a * alpha * w * flow(), 1.0);',
+        '}'].join('\n'),
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide,
+    });
+    const warp = new THREE.ShaderMaterial({
+      uniforms: Object.assign({ k: { value: 0 } }, U),
+      vertexShader: treeVS,
+      fragmentShader: [treeWin,
+        'uniform float k;',
+        'void main(){',
+        '  float w = win(); vec3 n = normalize(vN); if (!gl_FrontFacing) n = -n; float rim = 1.0 - abs(dot(n, normalize(vV)));',
+        '  gl_FragColor = vec4(n.xy * sin(3.14159 * rim) * k * w * flow(), 0.0, 1.0);',   // the tube's warp (twMat), flowing
+        '}'].join('\n'),
+      transparent: true, blending: THREE.AdditiveBlending, depthTest: false, depthWrite: false, side: THREE.DoubleSide,
+    });
+    return { glass, warp, U };
   }
-  function treePiece(k, pos, xAxis, yAxis, zAxis, size, col) {
-    if (treeN[k] >= TREE_MAX || size <= 0.02) return;
-    const near = smooth(BR_CAM_NEAR, BR_CAM_FULL, pos.distanceTo(cam.position)); if (near <= 0.02) return;
-    trM.makeBasis(xAxis, yAxis, zAxis); trQ.setFromRotationMatrix(trM); trS.set(size * near, size * near, size * near);
-    trM.compose(pos, trQ, trS); treePlates[k].setMatrixAt(treeN[k], trM); treePlates[k].setColorAt(treeN[k], col); treeN[k]++;
+  const trunks = new Map();   // pair -> { glass, warp, mats, seed, t0, key, roots }
+  let treeWarpOn = false;
+  function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  const fullR = (wh, s) => Math.sqrt(wh.b * wh.b + (wh.M * wh.M - wh.b * wh.b) * (2 * s / wh.L - 1) ** 2);
+  // The trunk's radius at s, angle phi: a log tapering from trunkTop x the mouth (the way in) to trunkBase x (the way out),
+  // never closer to the tube than 1.15 x its wall, ridged and gnarled.
+  function trunkR(wh, s, phi, seed) {
+    const u = s / wh.L, base = Math.max(fullR(wh, s) * 1.15, wh.M * (P.trunkTop + (P.trunkBase - P.trunkTop) * u));
+    const ridge = Math.abs(Math.sin(0.5 * phi * Math.max(3, Math.round(P.trunkRidges)) + 0.35 * Math.sin(u * 9 + seed)));
+    const gnarl = Math.sin(u * 6.3 + phi * 2 + seed) * Math.sin(u * 2.1 - phi + seed * 0.7);
+    return base * (1 + Math.max(0, P.trunkBark) * (ridge - 0.6) + Math.max(0, P.trunkGnarl) * gnarl);
   }
-  // A limb: a run of spindles from p along dir, turning outward (toward `out`) by `curl` rad over its length, forking once.
-  const lmA = new V3(), lmB = new V3(), lmD = new V3();
-  function limb(p, dir, out, len, segs, curl, th, bright, col, fork) {
-    lmA.copy(p); lmD.copy(dir).normalize(); const step = len / segs;
-    for (let i = 0; i < segs; i++) {
-      trAx.crossVectors(lmD, out); if (trAx.lengthSq() > 1e-8) lmD.applyAxisAngle(trAx.normalize(), -curl / segs);
-      lmB.copy(lmA).addScaledVector(lmD, step);
-      spindle(lmA, lmB, th * (1 - 0.55 * i / segs), bright, col);
-      lmA.copy(lmB);
+  const treeKey = (wh) => [wh.L, wh.M, wh.b, P.trunkTop, P.trunkBase, P.trunkBark, P.trunkRidges, P.trunkGnarl, P.branchCount, P.branchLength,
+    P.branchThickness, P.branchUp, P.branchZone, P.branchSymmetry, P.branchForks].join();
+  function buildTree(wh, seed) {
+    const pos = [], aS = [], aBi = [], aCap = [], aR = [], aB = [], base = [], idx = [], q = new V3();
+    const push = (v, s, bi, cap, r, b, root) => { pos.push(v.x, v.y, v.z); aS.push(s); aBi.push(bi); aCap.push(cap); aR.push(r); aB.push(b); base.push(root.x, root.y, root.z); };
+    const grid = (start, rows, cols) => { for (let r = 0; r < rows; r++) for (let j = 0; j < cols; j++) { const a = start + r * (cols + 1) + j, b = a + cols + 1; idx.push(a, b, a + 1, a + 1, b, b + 1); } };
+    // the trunk's bark
+    for (let r = 0; r <= TRUNK_RINGS; r++) for (let j = 0; j <= TRUNK_SEG; j++) {
+      const u = r / TRUNK_RINGS, s = u * wh.L, phi = j / TRUNK_SEG * Math.PI * 2;
+      whSurf(wh, s, phi, trunkR(wh, s, phi, seed), 0, q); push(q, u, -1, 0, 1, 0, q);
     }
-    if (fork > 0) {   // two children from the tip, splayed either side of the limb's plane
-      const tip = lmA.clone(), d = lmD.clone(), side = new V3().crossVectors(d, out).normalize();
-      for (const sgn of [-1, 1]) limb(tip, d.clone().applyAxisAngle(out.clone().normalize(), sgn * 0.45).addScaledVector(side, sgn * 0.25), out, len * 0.6, Math.max(1, segs - 1), curl * 0.7, th * 0.6, bright * 0.85, col, fork - 1);
+    grid(0, TRUNK_RINGS, TRUNK_SEG);
+    // the cut faces: the annulus from the mouth's rim out to the bark, its tree rings by aR
+    for (const end of [0, 1]) {
+      const s = end * wh.L, start = pos.length / 3, mouth = fullR(wh, s);
+      for (let j = 0; j <= TRUNK_SEG; j++) {
+        const phi = j / TRUNK_SEG * Math.PI * 2, outer = trunkR(wh, s, phi, seed);
+        for (const [rr, k] of [[mouth, 0], [outer, 1]]) { whSurf(wh, s, phi, rr, 0, q); push(q, end, -1, 1, k, 0, q); }
+      }
+      for (let j = 0; j < TRUNK_SEG; j++) { const a = start + 2 * j; idx.push(a, a + 1, a + 2, a + 2, a + 1, a + 3); }
     }
-  }
-  function drawTree(pr) {
-    const wh = pr.wh, vis = clamp01(P.coatVisibility); if (!wh || vis <= 0.004 || riddenByView(pr)) return;
-    const span = wh.s1 - wh.s0; if (span < 1) return;
-    const fade = pr.dying ? Math.max(0, 1 - pr.dieT / FADE_S) : 1, A = vis * fade; if (A <= 0.004) return;
-    const base = pilotColor(pr.pilot), edge = Math.max(4, 0.06 * wh.L), grow = (s) => smooth(0, edge, Math.min(s - wh.s0, wh.s1 - s));
-    // the bark: rows of omni plates round the trunk, offset half a plate row to row, the four families in a spiral
-    const nP = Math.max(3, Math.round(P.coatPerRing)), tilt = P.coatTilt * Math.PI / 180;
-    let s = 0, row = 0;
-    while (s < wh.L && row < 400) {
-      const r = whRadius(wh, s), pitch = Math.max(0.5, (2 * Math.PI * r / nP) * Math.max(0.3, P.coatPlateScale)), sMid = s + 0.5 * pitch;
-      const g = grow(sMid);
-      if (g > 0) {
-        const u = sMid / wh.L, wave = Math.pow(Math.max(0, Math.sin(2 * Math.PI * (u * 1.2 - simT * P.coatWaveSpeed))), 6) * P.coatWave;
-        const rr = whRadius(wh, sMid), lift = rr * (1 + Math.max(0, P.coatLift) + 0.25 * wave);
-        whAt(wh, sMid, trP, trT);
-        for (let j = 0; j < nP; j++) {
-          const phi = (j + 0.5 * (row & 1)) / nP * Math.PI * 2;
-          whSurf(wh, sMid, phi, lift, 0, trP);                                   // whSN: the wall's outward normal there
-          trX.crossVectors(trT, whSN).normalize();                                 // round the trunk
-          trY.copy(trT).applyAxisAngle(trX, tilt + 0.6 * wave).normalize();        // along it, the trailing edge lifted (a scale)
-          const zN = new V3().crossVectors(trX, trY).normalize();
-          const k = (j + row) & 3, size = (2 * Math.PI * lift / nP) * Math.max(0.2, P.coatPlateScale) * g;
-          trC.copy(base).multiplyScalar(SHAPE_TINT[k] * (0.85 + 0.6 * wave)).multiplyScalar(A);
-          treePiece(k, trP, trX, trY, zN, size, trC);
+    // the branches: a tapering tube along a path that curls toward the top, crooked like dead wood
+    const R = rng(seed + 17), roots = [], top = new V3(), tng = new V3();
+    const tube = (pts, r0, r1, bi, u, root, b0, rootLen) => {
+      const start = pos.length / 3, n = pts.length, T = new V3(), N = new V3(), Bv = new V3(), v = new V3();
+      let dist = 0;
+      for (let i = 0; i < n; i++) {
+        T.subVectors(pts[Math.min(n - 1, i + 1)], pts[Math.max(0, i - 1)]).normalize();
+        if (i === 0) { N.set(0, 1, 0); if (Math.abs(N.dot(T)) > 0.9) N.set(1, 0, 0); }
+        N.addScaledVector(T, -N.dot(T)).normalize(); Bv.crossVectors(T, N);   // carried along the path (no twist)
+        if (i) dist += pts[i].distanceTo(pts[i - 1]);
+        const f = i / (n - 1), rad = r0 + (r1 - r0) * f;
+        for (let j = 0; j <= BR_SIDES; j++) {
+          const a = j / BR_SIDES * Math.PI * 2;
+          v.copy(pts[i]).addScaledVector(N, rad * Math.cos(a)).addScaledVector(Bv, rad * Math.sin(a));
+          push(v, u, bi, 0, 1, b0 + dist / rootLen, root);
         }
       }
-      s += pitch; row++;
+      grid(start, n - 1, BR_SIDES);
+    };
+    const path = (p, dir, len, segs, curl) => {
+      const pts = [p.clone()], d = dir.clone().normalize(), ax = new V3(), c = p.clone(), step = len / segs;
+      for (let i = 0; i < segs; i++) {
+        ax.crossVectors(d, top); if (ax.lengthSq() > 1e-8) d.applyAxisAngle(ax.normalize(), curl / segs);   // curling toward the top
+        d.x += (R() - 0.5) * 0.25; d.y += (R() - 0.5) * 0.25; d.z += (R() - 0.5) * 0.25; d.normalize();   // crooked
+        c.addScaledVector(d, step); pts.push(c.clone());
+      }
+      return pts;
+    };
+    const limb = (p, dir, len, r0, forks, bi, u, root, b0, rootLen, sideSgn) => {
+      const pts = path(p, dir, len, forks > 0 ? 6 : 4, 0.5);
+      tube(pts, r0, r0 * 0.12, bi, u, root, b0, rootLen);
+      if (forks <= 0) return;
+      for (const [f, sgn] of [[0.45, sideSgn], [0.72, -sideSgn]]) {   // two forks, on alternate sides
+        const i = Math.round(f * (pts.length - 1)), at = pts[i], d = new V3().subVectors(pts[Math.min(pts.length - 1, i + 1)], at).normalize();
+        const sideV = new V3().crossVectors(d, top); if (sideV.lengthSq() < 1e-6) sideV.set(1, 0, 0); sideV.normalize();
+        const cd = d.clone().multiplyScalar(Math.cos(0.6)).addScaledVector(sideV, sgn * Math.sin(0.6));
+        limb(at, cd, len * (0.55 - 0.15 * f), r0 * (1 - 0.88 * f) * 0.8, forks - 1, bi, u, root, b0 + f * len / rootLen, rootLen, -sgn);
+      }
+    };
+    const n = Math.min(BR_MAXN, Math.max(0, Math.round(P.branchCount))), zone = clamp01(P.branchZone), sym = clamp01(P.branchSymmetry);
+    const up = P.branchUp * Math.PI / 180, nPairs = Math.ceil(n / 2), forks = Math.max(0, Math.min(3, Math.round(P.branchForks)));
+    for (let i = 0; i < n; i++) {
+      const k = i >> 1, second = i & 1, loose = 1 - sym;
+      const uK = 0.06 + Math.max(0, zone - 0.06) * (nPairs > 1 ? k / (nPairs - 1) : 0.5);
+      const u = clamp01(uK + loose * (R() - 0.5) * (second ? 0.2 : 0.08));
+      const phi = Math.PI / 2 + k * 1.2 + (second ? Math.PI : 0) + loose * (R() - 0.5) * 1.4;   // pairs face each other; each pair turned round the trunk
+      const s = u * wh.L; whAt(wh, s, q, tng); top.copy(tng).negate();
+      const root = new V3(); whSurf(wh, s, phi, trunkR(wh, s, phi, seed) * 0.92, 0, root);
+      const dir = whSN.clone().multiplyScalar(Math.cos(up)).addScaledVector(top, Math.sin(up));
+      const len = wh.M * Math.max(0, P.branchLength) * (0.9 + 0.2 * R()), r0 = Math.max(0.05, P.branchThickness * wh.M);
+      if (len < 0.5) continue;
+      limb(root, dir, len, r0, forks, roots.length, u, root, 0, len, second ? -1 : 1);
+      // the time the tunnel's front, rippling out of its centre (easeOutC), reaches this root
+      roots.push({ u, tReach: (1 - Math.cbrt(1 - Math.min(1, Math.abs(2 * u - 1)))) * wh.formT });
     }
-    // the crown (the way in) and the roots (the way out): spindle limbs from the mouth rims, in the bridge's colour
-    const col = base.clone().lerp(brW, clamp01(P.bridgeWhite));
-    const crownG = smooth(edge, 0, wh.s0), rootG = smooth(wh.L - edge, wh.L, wh.s1);
-    const mIn = whRadius(wh, 0), mOut = whRadius(wh, wh.L), th = Math.max(0.05, P.coatLimbThickness * wh.M);
-    const nC = Math.max(0, Math.round(P.crownBranches)), nR = Math.max(0, Math.round(P.rootCount));
-    const tIn = new V3(), tOut = new V3(), pIn = new V3(), pOut = new V3(), rad = new V3(), q = new V3();
-    whAt(wh, 0, pIn, tIn); whAt(wh, wh.L, pOut, tOut);
-    for (let k = 0; k < nC && crownG > 0; k++) {
-      const phi = (k + 0.25) / nC * Math.PI * 2;
-      whSurf(wh, 0, phi, mIn, 0, q); rad.copy(whSN);
-      const sp = P.crownSpread * Math.PI / 180, dir = tIn.clone().multiplyScalar(-Math.cos(sp)).addScaledVector(rad, Math.sin(sp));
-      limb(q, dir, rad, mIn * P.crownLength * crownG, 3, 0.35, th, A * 0.9, col, 2);
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    for (const [nm, arr] of [['aS', aS], ['aBi', aBi], ['aCap', aCap], ['aR', aR], ['aB', aB]]) g.setAttribute(nm, new THREE.Float32BufferAttribute(arr, 1));
+    g.setAttribute('aBase', new THREE.Float32BufferAttribute(base, 3));
+    g.setIndex(idx); g.computeVertexNormals();
+    return { g, roots };
+  }
+  function drawTrunk(pr) {
+    const wh = pr.wh, vis = clamp01(P.trunkVisibility);
+    let tr = trunks.get(pr);
+    if (!wh || vis <= 0.004 || wh.L < 1) { if (tr) tr.glass.visible = tr.warp.visible = false; return; }
+    const key = treeKey(wh);
+    if (!tr) {
+      const seed = Math.floor(Math.abs(wh.A.x * 13.7 + wh.A.y * 7.3 + wh.A.z * 3.1 + wh.L)) % 100000, b = buildTree(wh, seed), mats = treeMaterials();
+      const glass = new THREE.Mesh(b.g, mats.glass), warp = new THREE.Mesh(b.g, mats.warp);
+      glass.frustumCulled = warp.frustumCulled = false; glass.renderOrder = 3; scene.add(glass); twScene.add(warp);
+      // made the frame RT formed the tunnel: its clock starts with the tunnel's (a tree shown later is already grown)
+      const t0 = wh.phase === 'form' ? simT - wh.grow * wh.formT : simT - 1e3;
+      tr = { glass, warp, mats, seed, t0, key, roots: b.roots }; trunks.set(pr, tr);
     }
-    for (let k = 0; k < nR && rootG > 0; k++) {
-      const phi = (k + 0.5) / nR * Math.PI * 2;
-      whSurf(wh, wh.L, phi, mOut, 0, q); rad.copy(whSN);
-      const sp = P.rootSpread * Math.PI / 180, dir = tOut.clone().multiplyScalar(Math.cos(sp * 0.4)).addScaledVector(rad, Math.sin(sp * 0.4));
-      limb(q, dir, rad, mOut * P.rootLength * rootG, 4, sp * 0.8, th * 0.8, A * 0.8, col, 1);
+    if (key !== tr.key) {   // a slider moved: rebuild in place
+      const b = buildTree(wh, tr.seed); tr.glass.geometry.dispose(); tr.glass.geometry = tr.warp.geometry = b.g; tr.roots = b.roots; tr.key = key;
+    }
+    let f0 = wh.s0 / wh.L, f1 = wh.s1 / wh.L;
+    if (f0 <= 1e-3) f0 = -1; if (f1 >= 1 - 1e-3) f1 = 2;   // a finished end is a cut face, not a front
+    const fade = pr.dying ? Math.max(0, 1 - pr.dieT / FADE_S) : 1, cave = wh.cave != null ? clamp01(wh.cave) : 1, A = vis * fade * cave;
+    const U = tr.mats.U, edge = Math.max(4, 0.06 * wh.L) / wh.L, age = simT - tr.t0, grow = Math.max(0.05, P.branchGrowSeconds);
+    U.f0.value = f0; U.f1.value = f1; U.edge.value = edge; U.t.value = simT;
+    for (let i = 0; i < BR_MAXN; i++) {
+      const r = tr.roots[i];
+      U.bg.value[i] = r ? Math.min(smooth(0, 1, (age - r.tReach) / grow), smooth(0, edge, Math.min(r.u - f0, f1 - r.u))) * cave : 0;
+    }
+    const G = tr.mats.glass.uniforms, base = pilotColor(pr.pilot);
+    G.cIn.value.copy(base); G.cOut.value.copy(brW).lerp(base, 0.4); G.alpha.value = A; G.glass.value = Math.max(0, P.trunkGlass);
+    G.rim.value = Math.max(0, P.trunkRim); G.power.value = Math.max(0.5, P.trunkFresnel); G.rings.value = Math.max(1, P.trunkRings);
+    tr.mats.warp.uniforms.k.value = 0.05 * Math.max(0, P.trunkWarp) * A;
+    tr.glass.visible = A > 0.004;
+    tr.warp.visible = A > 0.004 && P.trunkWarp > 0;
+    if (tr.warp.visible) treeWarpOn = true;
+  }
+  function sweepTrunks() {   // a tunnel gone: its tree goes with it
+    for (const [pr, tr] of trunks) if (!pr.alive || !pairs.includes(pr)) {
+      scene.remove(tr.glass); twScene.remove(tr.warp); tr.glass.geometry.dispose(); tr.mats.glass.dispose(); tr.mats.warp.dispose(); trunks.delete(pr);
     }
   }
+
   // Your reticle (rounds 23, 26): faint at rest, full while the right stick or LT shapes it, rippling out of its centre as
   // it comes back; and as a tunnel forms, the reticle fading. Its grid is yours alone and only while you shape it; a
   // formed tunnel shows everyone its bridge (drawBridge) and bends space round it (updateTubeWarp, setLensUniforms).
@@ -1847,9 +1950,9 @@
     brN = 0;
     for (const [v, a] of retDraw) drawReticle(v, a);
     retDraw.length = 0;
-    treeN.fill(0);
-    if (mode === 'fly') for (const pr of pairs) if (pr.alive && pr.wh) { nFill = drawBridge(pr, nFill); drawTree(pr); }
-    for (let k = 0; k < 4; k++) { const m = treePlates[k]; m.count = treeN[k]; m.instanceMatrix.needsUpdate = true; if (m.instanceColor) m.instanceColor.needsUpdate = true; }
+    treeWarpOn = false;
+    if (mode === 'fly') for (const pr of pairs) if (pr.alive && pr.wh) { nFill = drawBridge(pr, nFill); drawTrunk(pr); }
+    sweepTrunks();
     bridgeMesh.count = brN; bridgeMesh.instanceMatrix.needsUpdate = true; if (bridgeMesh.instanceColor) bridgeMesh.instanceColor.needsUpdate = true;
     for (let i = nFill; i < wfMeshes.length; i++) wfMeshes[i].visible = false;
     whGeo.setDrawRange(0, whNv); whLines.visible = whNv > 0;
@@ -1905,7 +2008,7 @@
       pos.needsUpdate = nor.needsUpdate = sg.needsUpdate = true; m.visible = true;
     }
     for (let i = n; i < twMeshes.length; i++) twMeshes[i].visible = false;
-    return n > 0;
+    return n > 0 || treeWarpOn;   // round 14: a tree bends space as its tunnel's wall does (drawTrunk)
   }
 
 
@@ -3217,20 +3320,25 @@
     bridgeWhite: { scene: 'bridge', d: 'The bridge\'s spindles are its maker\'s domain colour mixed toward white by this much (its glass keeps the domain colour).', lo: 'The domain colour.', hi: 'White spindles.' },
     throatDiameterMax: { scene: 'tunnel', d: 'The throat\'s diameter at the LONGEST tunnel the sticks can ask for (throatDiameter is the shortest\'s); lengths between grow in between, so a long tunnel is a thicker trunk.', lo: 'A thin long tunnel.', hi: 'A thick long trunk.' },
     mouthDiameterMax: { scene: 'tunnel', d: 'The entry and exit diameter at the LONGEST tunnel (mouthDiameter is the shortest\'s); lengths between grow in between.', lo: 'Narrow long mouths.', hi: 'Wide long mouths.' },
-    coatVisibility: { scene: 'bridge', d: 'A formed tunnel is a tree to everyone outside it: bark of omni plates, a crown of branches at the way in, roots at the way out. Its rider never sees it. 0 hides it.', lo: 'No tree.', hi: 'The full tree.' },
-    coatPerRing: { scene: 'bridge', d: 'How many omni plates stand round the trunk in each row; rows follow on, half a plate offset, so the four shapes spiral.', lo: 'Few big scales.', hi: 'Fine scales.' },
-    coatPlateScale: { scene: 'bridge', d: 'Each bark plate\'s size as a share of its slot round the ring: under 1 leaves gaps, as the omni crystal\'s exploded plates do.', lo: 'Sparse flakes.', hi: 'Overlapping scales.' },
-    coatLift: { scene: 'bridge', d: 'How far the bark stands off the tube\'s wall, as a share of the local radius.', lo: 'Tight on the wall.', hi: 'Standing off.' },
-    coatTilt: { scene: 'bridge', d: 'Each plate\'s trailing edge lifts by this angle, so the bark reads as scales, like a pinecone or a snake.', lo: 'Flat bark.', hi: 'Raised scales.' },
-    coatWave: { scene: 'bridge', d: 'A slow wave runs down the bark from the crown to the roots, lifting and brightening the plates it passes (the omni crystal\'s flip wave).', lo: 'Still bark.', hi: 'A strong swell.' },
-    coatWaveSpeed: { scene: 'bridge', d: 'How many waves run down the bark a second.', lo: 'Still.', hi: 'Quick waves.' },
-    crownBranches: { scene: 'bridge', d: 'How many branches crown the way in. Each forks twice as it reaches back toward where you come from.', lo: 'A bare mouth.', hi: 'A full crown.' },
-    crownLength: { scene: 'bridge', d: 'How long the crown\'s branches reach, as a multiple of the mouth\'s radius.', lo: 'Twigs.', hi: 'Long boughs.' },
-    crownSpread: { scene: 'bridge', d: 'How far the branches lean out from the tunnel\'s axis as they reach back.', lo: 'Straight back.', hi: 'Spread wide.' },
-    rootCount: { scene: 'bridge', d: 'How many roots splay past the way out. Each forks once.', lo: 'A bare mouth.', hi: 'A tangle of roots.' },
-    rootLength: { scene: 'bridge', d: 'How long the roots reach past the way out, as a multiple of the mouth\'s radius.', lo: 'Stubs.', hi: 'Long roots.' },
-    rootSpread: { scene: 'bridge', d: 'How far the roots curl out from the axis along their length.', lo: 'Straight on.', hi: 'Curling wide.' },
-    coatLimbThickness: { scene: 'bridge', d: 'How thick the branches and roots are at their base, as a share of the mouth\'s radius, so a bigger tunnel has heavier limbs (they taper toward their tips).', lo: 'Fine twigs.', hi: 'Heavy limbs.' },
+    trunkVisibility: { scene: 'bridge', d: 'A tunnel\'s outer layer is a dead tree: its trunk round the tunnel, the way in its top cut and the way out its bottom cut, and bare branches out of its top. It forms with the tunnel the moment RT is pulled, in the wall\'s own glass and bent space. Everyone sees it, its rider too. 0 hides it.', lo: 'No tree.', hi: 'The full tree.' },
+    trunkTop: { scene: 'bridge', d: 'The trunk\'s radius at the way in (its top cut), as a multiple of the mouth\'s radius. It never comes inside the tube.', lo: 'A thin rind round the mouth.', hi: 'A thick trunk.' },
+    trunkBase: { scene: 'bridge', d: 'The trunk\'s radius at the way out (its bottom cut), as a multiple of the mouth\'s radius: wider than the top, as a tree\'s base is.', lo: 'Straight trunk.', hi: 'A spreading base.' },
+    trunkBark: { scene: 'bridge', d: 'How deep the bark\'s ridges run, as a share of the trunk\'s radius.', lo: 'Smooth.', hi: 'Deep furrows.' },
+    trunkRidges: { scene: 'bridge', d: 'How many bark ridges run round the trunk.', lo: 'A few big ridges.', hi: 'Fine bark.' },
+    trunkGnarl: { scene: 'bridge', d: 'A slow, uneven wobble of the trunk\'s surface, so it is not a perfect log.', lo: 'Machined.', hi: 'Gnarled.' },
+    trunkGlass: { scene: 'bridge', d: 'The tree\'s glass where you look straight at it (the wall\'s glass): low keeps its middle see-through, so the tunnel inside shows.', lo: 'Clear middle.', hi: 'Milky.' },
+    trunkRim: { scene: 'bridge', d: 'The tree\'s glass at its silhouette (a Fresnel rim, as the wall\'s): where the surface turns away from you, it shines.', lo: 'Faint outline.', hi: 'Bright outline.' },
+    trunkFresnel: { scene: 'bridge', d: 'How tight the rim hugs the silhouette.', lo: 'A broad glow.', hi: 'A thin edge.' },
+    trunkRings: { scene: 'bridge', d: 'How many tree rings show on each cut end, round the mouth.', lo: 'One ring.', hi: 'Many rings.' },
+    trunkWarp: { scene: 'bridge', d: 'How strongly the tree bends the space seen through it, as the tunnel\'s wall does (the same warp), flowing slowly from top to bottom like water.', lo: 'Clear glass.', hi: 'Strongly bent, watery.' },
+    branchCount: { scene: 'bridge', d: 'How many bare branches the tree has, in pairs facing each other, each pair turned round the trunk.', lo: 'A bare trunk.', hi: 'A full crown.' },
+    branchLength: { scene: 'bridge', d: 'How long the branches are, as a multiple of the mouth\'s radius (all much alike).', lo: 'Stubs.', hi: 'Long boughs.' },
+    branchThickness: { scene: 'bridge', d: 'How thick a branch is where it leaves the trunk, as a share of the mouth\'s radius. It tapers to a point.', lo: 'Thin twigs.', hi: 'Heavy limbs.' },
+    branchUp: { scene: 'bridge', d: 'How far the branches lean toward the trunk\'s top (the way in), as a tree\'s branches reach upward.', lo: 'Straight out.', hi: 'Reaching up.' },
+    branchZone: { scene: 'bridge', d: 'How far down the trunk, from its top cut (the way in), the branches grow: 0.5 = its top half.', lo: 'Only at the top.', hi: 'All the way down.' },
+    branchSymmetry: { scene: 'bridge', d: 'How alike each pair is: 1 = the two branches mirror each other exactly; lower moves each to its own place and angle.', lo: 'Each its own.', hi: 'Mirrored pairs.' },
+    branchForks: { scene: 'bridge', d: 'How many times each branch forks (twice on alternate sides each time), as a bare dead tree\'s branches do.', lo: 'Single rods.', hi: 'Finely forked.' },
+    branchGrowSeconds: { scene: 'bridge', d: 'How long each branch takes to grow, starting the moment the forming tunnel reaches its root. It shrinks back as the tunnel collapses past it.', lo: 'Pops out with the tunnel.', hi: 'Grows slowly.' },
     bridgeShimmer: { scene: 'bridge', d: 'A shimmer of light running through the spindles from the way in to the way out, so the bridge reads as a passage. 0 = steady.', lo: 'Steady.', hi: 'A strong running pulse.' },
     aiWormhole: { scene: 'tunnel', cfg: { ai: true }, d: 'Whether the AI uses the wormhole at all. 0 flies the course on steering alone: the baseline.', lo: 'No wormhole.', hi: 'Uses it.' },
     aiStraightMinDistance: { scene: 'tunnel', cfg: { ai: true, aiFar: 600 }, d: 'The AI forms a straight tunnel only with its ring at least this far away.', lo: 'Straight hops even near a ring.', hi: 'Straight only on long legs.' },
@@ -3471,22 +3579,27 @@
     bridgeWhite: ['MeerkatWormholeConfig.bridgeWhite', 'linked'],
     reticleWhite: ['MeerkatWormholeConfig.reticleWhite', 'linked'],
     reticleNearLight: ['MeerkatWormholeConfig.reticleNearLight', 'linked'],
+    trunkVisibility: ['MeerkatWormholeConfig.trunkVisibility', 'new'],
+    trunkTop: ['MeerkatWormholeConfig.trunkTop', 'new'],
+    trunkBase: ['MeerkatWormholeConfig.trunkBase', 'new'],
+    trunkBark: ['MeerkatWormholeConfig.trunkBark', 'new'],
+    trunkRidges: ['MeerkatWormholeConfig.trunkRidges', 'new'],
+    trunkGnarl: ['MeerkatWormholeConfig.trunkGnarl', 'new'],
+    trunkGlass: ['MeerkatWormholeConfig.trunkGlass', 'new'],
+    trunkRim: ['MeerkatWormholeConfig.trunkRim', 'new'],
+    trunkFresnel: ['MeerkatWormholeConfig.trunkFresnel', 'new'],
+    trunkRings: ['MeerkatWormholeConfig.trunkRings', 'new'],
+    trunkWarp: ['MeerkatWormholeConfig.trunkWarp', 'new'],
+    branchCount: ['MeerkatWormholeConfig.branchCount', 'new'],
+    branchLength: ['MeerkatWormholeConfig.branchLength', 'new'],
+    branchThickness: ['MeerkatWormholeConfig.branchThickness', 'new'],
+    branchUp: ['MeerkatWormholeConfig.branchUp', 'new'],
+    branchGrowSeconds: ['MeerkatWormholeConfig.branchGrowSeconds', 'new'],
+    branchZone: ['MeerkatWormholeConfig.branchZone', 'new'],
+    branchSymmetry: ['MeerkatWormholeConfig.branchSymmetry', 'new'],
+    branchForks: ['MeerkatWormholeConfig.branchForks', 'new'],
     throatDiameterMax: ['MeerkatWormholeConfig.throatDiameterMax', 'new'],
     mouthDiameterMax: ['MeerkatWormholeConfig.mouthDiameterMax', 'new'],
-    coatVisibility: ['MeerkatWormholeConfig.coatVisibility', 'new'],
-    coatPerRing: ['MeerkatWormholeConfig.coatPerRing', 'new'],
-    coatPlateScale: ['MeerkatWormholeConfig.coatPlateScale', 'new'],
-    coatLift: ['MeerkatWormholeConfig.coatLift', 'new'],
-    coatTilt: ['MeerkatWormholeConfig.coatTilt', 'new'],
-    coatWave: ['MeerkatWormholeConfig.coatWave', 'new'],
-    coatWaveSpeed: ['MeerkatWormholeConfig.coatWaveSpeed', 'new'],
-    crownBranches: ['MeerkatWormholeConfig.crownBranches', 'new'],
-    crownLength: ['MeerkatWormholeConfig.crownLength', 'new'],
-    crownSpread: ['MeerkatWormholeConfig.crownSpread', 'new'],
-    rootCount: ['MeerkatWormholeConfig.rootCount', 'new'],
-    rootLength: ['MeerkatWormholeConfig.rootLength', 'new'],
-    rootSpread: ['MeerkatWormholeConfig.rootSpread', 'new'],
-    coatLimbThickness: ['MeerkatWormholeConfig.coatLimbThickness', 'new'],
     aiWormhole: ['MeerkatWormholeConfig.aiWormhole', 'linked'],
     aiStraightMinDistance: ['MeerkatWormholeConfig.aiStraightMinDistance', 'linked'],
     aiBentMinDistance: ['MeerkatWormholeConfig.aiBentMinDistance', 'linked'],
@@ -3906,7 +4019,7 @@
     // Config; the ability and all three of its cards (look, shape, ride; Yash, 2026-10-27) in Play Style Config; the
     // stand-in hull in Vessel Config
     R: [['scene', 'Scene Config', ['grp-scene', 'grp-flight']], ['game', 'Game Config', ['grp-intensity', 'grp-game']], ['ai', 'AI Config', ['grp-ai']],
-      ['style', 'Play Style Config', ['mainCard', 'grp-reticle', 'grp-look', 'grp-space', 'grp-shape', 'grp-ride']], ['input', 'Input', ['keysSec']],
+      ['style', 'Play Style Config', ['mainCard', 'grp-reticle', 'grp-look', 'grp-tree', 'grp-space', 'grp-shape', 'grp-ride']], ['input', 'Input', ['keysSec']],
       ['others', 'Vessel Config', ['grp-abCharge', 'grp-abMass', 'grp-abSpace', 'grp-abTime', 'grp-lope']]],
     B: [['runs', 'Runs', ['runsCard']], ['score', 'Scorecard', ['scoreWrap']], ['log', 'Decisions', ['logSec']], ['about', 'About', ['introP']]],
   };
@@ -4025,6 +4138,8 @@
   // defineProperties, not assign: assign copies a getter's value once, so ftLive reads stale forever.
   Object.defineProperties(window.__meerkatStudio, Object.getOwnPropertyDescriptors({
     SHIPPED, SPEC,
+    // rounds 13-14: each live tree's state (for a recorder): shown, the tunnel window it shows, its brightness, its age, branch growth
+    trunks() { return [...trunks].map(([pr, tr]) => { const U = tr.mats.U; return { visible: tr.glass.visible, warp: tr.warp.visible, f0: +U.f0.value.toFixed(3), f1: +U.f1.value.toFixed(3), alpha: +tr.mats.glass.uniforms.alpha.value.toFixed(3), age: +(simT - tr.t0).toFixed(2), verts: tr.glass.geometry.attributes.position.count, branches: tr.roots.map((r, i) => +U.bg.value[i].toFixed(2)), centre: whAt(pr.wh, 0.5 * pr.wh.L, new V3()).toArray().map((x) => +x.toFixed(1)) }; }); },
     reset(sd) { if (sd != null) seed = sd; ai.seed = 1; buildCourse(); spawn(); },
     state() { return { t: simT, race, raceT, threaded, speed, pos: hull.position.toArray(), gate: !!ftLive.gate, riding: !!(ftLive.gate && ftLive.gate.state === 'tube'), reticle: !!ftLive.ret }; },
     score() { return { levels: lastLevels }; },

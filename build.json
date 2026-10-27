@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "0e801d3000ec8c767ec0736cc5fa379dc9cc759e",
-  "pathSha": "b55ca18b3d80ce97239faac920e151b575bf7f16",
-  "subject": "feat(meerkat-studio): round 12 - the tunnel grows with its length and is a tree from outside (artifact only)",
-  "committedAt": "2026-10-27T21:29:45Z",
+  "sha": "c1a6274ed2b69b17a9a6fd4e9f468900cf1d8807",
+  "pathSha": "c1a6274ed2b69b17a9a6fd4e9f468900cf1d8807",
+  "subject": "feat(meerkat-studio): round 14 - the tree is the tunnel's outer layer, formed with it in the wall's glass and warp (artifact only)",
+  "committedAt": "2026-10-27T22:20:03Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
