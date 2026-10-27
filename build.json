@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "31ef2e15dd3bdd8bc42a6872632254a45d8e7e40",
-  "pathSha": "31ef2e15dd3bdd8bc42a6872632254a45d8e7e40",
-  "subject": "feat(stoat-studio): round 20 - the wormhole is shaped as a reticle, made on release",
-  "committedAt": "2026-10-26T23:28:50Z",
+  "sha": "3247b4d70df6a62fbb0a0de38b14e213ed0d57aa",
+  "pathSha": "c72c7df0cf0d49b0b981ab8a5576074f1a31fc6c",
+  "subject": "Merge branch 'claude/adoring-cerf-m94x1o' into Ys-bleeding-edge",
+  "committedAt": "2026-10-26T23:50:41Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
