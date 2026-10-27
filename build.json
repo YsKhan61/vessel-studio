@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "c179fdf29041f205f781b1dde8d3e3172735bde8",
-  "pathSha": "c179fdf29041f205f781b1dde8d3e3172735bde8",
-  "subject": "feat(stoat-studio): round 27 - save any settings section as a named profile",
-  "committedAt": "2026-10-27T02:13:36Z",
+  "sha": "4f12fcbde7a76b4fa9ac78ec08098c6a4cae2f9d",
+  "pathSha": "4f12fcbde7a76b4fa9ac78ec08098c6a4cae2f9d",
+  "subject": "feat(meerkat-studio): the wormhole becomes the Meerkat; the Stoat keeps Mass and Time",
+  "committedAt": "2026-10-27T03:12:17Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
