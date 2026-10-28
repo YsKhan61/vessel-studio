@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "b3f335dcae3bac6135896825dced58937d5f944a",
-  "pathSha": "b3f335dcae3bac6135896825dced58937d5f944a",
-  "subject": "merge(meerkat-studio): Ys-bleeding-edge's round 18 kits into the root slide, which becomes round 19",
-  "committedAt": "2026-10-28T00:29:31Z",
+  "sha": "7e36c049d6318c7f4842af237cf0e424daba4d06",
+  "pathSha": "7e36c049d6318c7f4842af237cf0e424daba4d06",
+  "subject": "fix(meerkat-studio): no black fill inside the roots; a soft inner tube, rough outer bark, a calm ride",
+  "committedAt": "2026-10-28T01:09:55Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
