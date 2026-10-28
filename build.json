@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "98243af8e17ec5a14a96b74ffb575ae0504f2f92",
-  "pathSha": "98243af8e17ec5a14a96b74ffb575ae0504f2f92",
-  "subject": "Merge remote-tracking branch 'origin/Ys-bleeding-edge' into claude/adoring-cerf-m94x1o",
-  "committedAt": "2026-10-27T23:12:06Z",
+  "sha": "b3f335dcae3bac6135896825dced58937d5f944a",
+  "pathSha": "b3f335dcae3bac6135896825dced58937d5f944a",
+  "subject": "merge(meerkat-studio): Ys-bleeding-edge's round 18 kits into the root slide, which becomes round 19",
+  "committedAt": "2026-10-28T00:29:31Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
