@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "132cc59eb8a2e6ee82d8c0d2e0f382d08fe80a9d",
-  "pathSha": "8605856c4f63d6ca5475662c239e6015610849f5",
-  "subject": "Merge bleeding-edge into Ys-bleeding-edge (reorient 2026-11-01)",
-  "committedAt": "2026-11-01T04:46:04+05:30",
+  "sha": "4f875bd14c990136d47d1a53d163ae77268fee25",
+  "pathSha": "730867a09fa47a55fa1b321fcd36ef75115edc9d",
+  "subject": "Merge remote-tracking branch 'origin/Ys-bleeding-edge' into Ys-bleeding-edge",
+  "committedAt": "2026-11-01T20:20:11Z",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
