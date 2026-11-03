@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "9f332918fa9423c418c2e84354912ba6cd133c15",
-  "pathSha": "d9fd3aa98d0df5559a55a3b0db8db36e55a4e297",
-  "subject": "chore(stoat): studio note, shipped config fields, checklist entry, asset + flick tests",
-  "committedAt": "2026-11-02T23:12:53+05:30",
+  "sha": "09361c8c2acee62610d2c9d6eedb89b5cbf7dfef",
+  "pathSha": "f31cc96b179536d823c41aea72f9f8f218548de2",
+  "subject": "tune(stoat): an easier slingshot - rings further apart, a wider window",
+  "committedAt": "2026-11-03T05:17:24+05:30",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
