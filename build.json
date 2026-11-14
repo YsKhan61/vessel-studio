@@ -1,10 +1,10 @@
 {
   "repo": "froglet-studio/cosmic-shore",
   "branch": "Ys-bleeding-edge",
-  "sha": "30e816ccc78a8799ccbff48f1d2ae5cd6b0233cd",
-  "pathSha": "f513c454aec24b234374dd5a78d6bc3f24caf6bb",
-  "subject": "feat(meerkat): the omnicrystal is Fulmen; the Rift and the Soliton Network are parked",
-  "committedAt": "2026-11-11T02:16:10+05:30",
+  "sha": "8a306db1b16e741cc69421b226510aec385ca421",
+  "pathSha": "961cf1af5b9b8dd8a5b67e3fc5ed91d0c37d273f",
+  "subject": "merge: bleeding-edge into Ys-bleeding-edge (2026-11-14)",
+  "committedAt": "2026-11-14T23:53:00+05:30",
   "publishedAt": null,
   "artifact": "https://claude.ai/artifact/3igBJJbNvJjsfJoBJnAMPa",
   "session": null
